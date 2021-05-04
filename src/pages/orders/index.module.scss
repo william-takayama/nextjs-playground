@@ -1,0 +1,48 @@
+.ordersList {
+  display: flex;
+  flex-flow: column;
+}
+
+.orderItem {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--color-x-accent);
+  border-radius: 0.5rem;
+  padding: 1.6rem;
+  margin: 0.4rem 0;
+
+  h2 {
+    margin: 0;
+  }
+
+  a {
+    font-size: 0.8rem;
+  }
+}
+
+.title {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.tableContainer {
+  font-size: 1rem;
+  border-collapse: collapse;
+  border-color: white;
+  text-align: left;
+  width: 60%;
+
+  thead {
+    text-align: right;
+  }
+
+  tr,
+  td,
+  th {
+    font-size: 0.8rem;
+    font-weight: 400;
+    padding: 0.4rem !important;
+  }
+}
