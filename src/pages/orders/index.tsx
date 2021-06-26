@@ -1,12 +1,14 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import React, { useCallback, useMemo, useState } from "react";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 import BottomSheet from "../../components/BottomSheet/BottomSheet";
+import OrderDetails from "../../components/Orders/OrderDetails";
+import OrdersList from "../../components/Orders/OrderList";
 import { orders } from "../../mock/orders";
 import classes from "./index.module.scss";
 
-type OrderType = typeof orders[0];
+export type OrderType = typeof orders[0];
 
 type OrderState = "orders" | "details";
 
@@ -14,6 +16,8 @@ export default function OrderPage({}) {
   const router = useRouter();
   const mode = (router.query?.mode as OrderState) ?? "orders";
   const [isVisible, setIsVisible] = useState(false);
+  // const DynamicDetails = dynamic(() => import("../../components/Orders/OrderDetails").then((mod) => mod.OrderDetails));
+  // const orders = dynamic(() => import("../../mock/orders").then((mod) => mod.orders));
 
   const orderDetails = useMemo(
     () => orders.find((order) => order.number === router?.query?.orderNumber),
@@ -28,7 +32,12 @@ export default function OrderPage({}) {
   return (
     <>
       <PageComponent setIsVisible={setIsVisible} />
-      <BottomSheet id="orders" visible={isVisible} onDismiss={onDismiss}>
+      <BottomSheet
+        id="orders"
+        visible={isVisible}
+        onDismiss={onDismiss}
+        contentClassName={classes.contentContainer}
+      >
         {mode === "orders" && <OrdersList orders={orders} />}
         {mode === "details" && <OrderDetails orderDetails={orderDetails} />}
       </BottomSheet>
@@ -36,72 +45,13 @@ export default function OrderPage({}) {
   );
 }
 
-function OrdersList({ orders }: { orders: OrderType[] }) {
-  return (
-    <ul className={classes.ordersList}>
-      {orders.map((order) => (
-        <li className={classes.orderItem}>
-          <h2 className={classes.title}>Number: {order.number}</h2>
-          <Link
-            href={{
-              pathname: "/orders",
-              query: { mode: "details", orderNumber: order.number },
-            }}
-            as={`/orders/${order.number}`}
-          >
-            <a>See more</a>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 function PageComponent({ setIsVisible }) {
   return (
-    <button onClick={() => setIsVisible(true)}>
-      <FiArrowRight size={20} color="white" />
-    </button>
-  );
-}
-
-function OrderDetails({ orderDetails }: { orderDetails: OrderType }) {
-  const router = useRouter();
-
-  return (
-    <>
-      <Link
-        href={{
-          pathname: "/orders",
-          query: { mode: "orders" },
-        }}
-        as={`/orders`}
-      >
-        <button onClick={() => router.back()}>
-          <FiArrowLeft size={20} color="var(--color-foreground)" />
-        </button>
-      </Link>
-      <h2 className={classes.title}>
-        Order Number: {orderDetails?.number ?? "Something went wrong"}
-      </h2>
-      <table
-        //@ts-ignore
-        border={1}
-        cellPadding={20}
-        className={classes.tableContainer}
-      >
-        <thead>Order Details</thead>
-        <tbody>
-          <tr>
-            <th>Street</th>
-            <th>{orderDetails?.details?.address?.street}</th>
-          </tr>
-          <tr>
-            <td>Number</td>
-            <td>{orderDetails?.details?.address?.number}</td>
-          </tr>
-        </tbody>
-      </table>
-    </>
+    <div className={classes.container}>
+      <p>Open orders</p>
+      <button onClick={() => setIsVisible(true)}>
+        <FiArrowRight size={20} color="white" />
+      </button>
+    </div>
   );
 }
