@@ -5,7 +5,8 @@
 }
 
 :root {
-  --white: #fff;
+  --color-white: #fff;
+  --color-black: #000;
 
   --gray-50: #f7f8fa;
   --gray-100: #e6e8eb;
@@ -20,7 +21,7 @@
   --purple-500: #8257e5;
   --purple-800: #6f48c9;
 
-  --color-primary: var(--white);
+  --color-primary: var(--color-white);
   --color-secondary: var(--gray-800);
 
   --color-background: var(--color-primary);
@@ -39,7 +40,7 @@
 
   --color-positive: var(--green-500);
 
-  --size-header-height: 5.5rem;
+  --size-header-height: 3.5rem;
 }
 
 body,
@@ -48,7 +49,7 @@ textarea,
 button {
   font: 500 1rem Inter, sans-serif;
   background-color: var(--color-xxx-accent);
-  color: var(--color-xxx-contrast);
+  color: var(--color-contrast);
 }
 
 a {
