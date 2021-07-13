@@ -1,4 +1,6 @@
 .container {
   display: grid;
   place-items: center;
+  justify-content: center;
+  height: calc(100vh - var(--size-header-height));
 }
